@@ -1,5 +1,6 @@
 # Base image for Blender
-FROM blender:latest
+FROM public.ecr.aws/docker/library/blender:latest
+
 
 # Set working directory
 WORKDIR /workspace
