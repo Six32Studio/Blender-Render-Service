@@ -1,11 +1,8 @@
 # Base image for Blender
-FROM blender:latest
+FROM blender:3.3  # Using a specific version for stability
 
 # Set working directory
 WORKDIR /workspace
-
-# Create the output directory (persistent storage)
-RUN mkdir -p /mnt/output
 
 # Copy Python script into the container
 COPY replace_faces.py /workspace/replace_faces.py
