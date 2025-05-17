@@ -1,5 +1,5 @@
 # Base image for Blender
-FROM blender:3.3  # Using a specific version for stability
+FROM blender:latest
 
 # Set working directory
 WORKDIR /workspace
