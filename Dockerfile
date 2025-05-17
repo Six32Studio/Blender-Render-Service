@@ -25,4 +25,3 @@ RUN chmod +x /app/entrypoint.sh
 
 # Set default command to entrypoint
 ENTRYPOINT ["/app/entrypoint.sh"]
-
