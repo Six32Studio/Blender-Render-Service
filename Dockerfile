@@ -1,14 +1,12 @@
-# Base image for Blender (Use a public image)
-FROM public.ecr.aws/docker/library/blender:latest
+FROM ubuntu:20.04
 
-# Set working directory
-WORKDIR /workspace
+RUN apt-get update && \
+    apt-get install -y \
+    blender \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy Python script into the container
-COPY replace_faces.py /workspace/replace_faces.py
+COPY . /app
+WORKDIR /app
 
-# Set default command to run Blender in the background with the script
-CMD ["blender", "--background", "--python", "/workspace/replace_faces.py", "--engine", "CYCLES"]
-
-
+CMD ["blender", "-b", "scene.blend", "-o", "//render_", "-F", "PNG", "-x", "1", "-f", "1"]
 
