@@ -1,7 +1,7 @@
 # Base image with CUDA for GPU support
 FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04
 
-# Install necessary dependencies
+# Install Blender
 RUN apt-get update && \
     apt-get install -y wget curl git ca-certificates && \
     apt-get clean
@@ -15,13 +15,14 @@ RUN wget https://download.blender.org/release/Blender3.3/blender-3.3.1-linux-x64
 # Set working directory
 WORKDIR /app
 
-# Copy the Python script for rendering (replace_faces.py)
-COPY replace_faces.py /app/replace_faces.py
-
 # Ensure NVIDIA runtime is used for Docker
 ENV NVIDIA_VISIBLE_DEVICES=all
 ENV NVIDIA_DRIVER_CAPABILITIES=compute,video,utility
 
-# Set default command to run Blender with CUDA
-CMD ["blender", "--background", "--python", "/app/replace_faces.py", "--engine", "CYCLES", "-- --device", "CUDA"]
+# Copy entrypoint script
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+# Set default command to entrypoint
+ENTRYPOINT ["/app/entrypoint.sh"]
 
