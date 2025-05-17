@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: Blender-Video-Service
+    env: docker
+    dockerfilePath: ./Dockerfile
+    buildCommand: ""
+    startCommand: "blender --background --render-output /output --engine CYCLES"
