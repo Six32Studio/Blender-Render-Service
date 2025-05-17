@@ -1,9 +1,9 @@
 # Base image with CUDA for GPU
 FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04
 
-# Install dependencies
+# Install essential dependencies
 RUN apt-get update && \
-    apt-get install -y wget tar xz-utils && \
+    apt-get install -y wget tar xz-utils libx11-6 libxi6 libgl1 libxrender1 libsm6 libxcursor1 && \
     rm -rf /var/lib/apt/lists/*
 
 # Download and install Blender (latest stable version)
@@ -18,5 +18,6 @@ WORKDIR /workspace
 # Copy your script into the container
 COPY replace_faces.py /workspace/replace_faces.py
 
-# Set entrypoint
-CMD ["/usr/local/bin/blender", "--background", "--python", "/workspace/replace_faces.py", "--engine", "CYCLES"]
+# Set the entrypoint for GPU-accelerated Blender
+CMD ["blender", "--background", "--python", "/workspace/replace_faces.py", "--engine", "CYCLES"]
+
